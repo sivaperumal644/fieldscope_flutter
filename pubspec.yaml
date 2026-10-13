@@ -2,6 +2,31 @@ name: fieldscope_workspace
 publish_to: none
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
+  sdk: '^3.13.5'
+
 dev_dependencies:
   melos: ^8.9.0
+
+workspace:
+  - utility/fieldscope_analysis
+
+melos:
+  command:
+    bootstrap:
+      runPubGetInParallel: false
+
+  scripts:
+    analyze:
+      exec: dart analyze --fatal-infos .
+      description: Run static analysis across every package
+
+    format:
+      exec: dart format --set-exit-if-changed .
+      description: Check formatting across every package
+
+    test:
+      exec: flutter test --coverage
+      packageFilters:
+        dirExists: test
+      description: Run tests with coverage in every package that has a test folder
+
